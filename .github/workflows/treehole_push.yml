@@ -5,9 +5,24 @@ on:
   schedule:
     - cron: "0 */4 * * *"
 
+
 jobs:
   run-task:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 12345678
+          MYSQL_DATABASE: treehole_push
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -p12345678"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     defaults:
       run:
@@ -43,13 +58,34 @@ jobs:
           TREEHOLE_X_XSRF_TOKEN=${{ secrets.TREEHOLE_X_XSRF_TOKEN }}
           TREEHOLE_UUID=${{ secrets.TREEHOLE_UUID }}
           TREEHOLE_TIMEOUT=15
+
+          MYSQL_HOST=127.0.0.1
+          MYSQL_PORT=3306
+          MYSQL_USER=root
+          MYSQL_PASSWORD=12345678
+          MYSQL_DB=treehole_push
+
           SERVERCHAN_SENDKEY=${{ secrets.SERVERCHAN_SENDKEY }}
+
           RUNNER_INTERVAL_SECONDS=6000
           RECENT_DAYS=7
           SEARCH_PAGE=1
           SEARCH_LIMIT=20
           SEARCH_COMMENT_LIMIT=10
           EOF
+
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do
+            nc -z 127.0.0.1 3306 && echo "MySQL is up" && exit 0
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+          echo "MySQL did not start in time"
+          exit 1
+
+      - name: Initialize database
+        run: python scripts/init_db.py
 
       - name: Run script
         run: python -m app.runner_core
