@@ -37,12 +37,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Show repository files
-        run: |
-          pwd
-          ls -la
-          ls -la app
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
