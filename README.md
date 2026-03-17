@@ -70,3 +70,64 @@ treehole_push/
 ├─ .gitignore            # Git 忽略文件
 ├─ requirements.txt      # Python 依赖
 └─ README.md
+
+---
+
+## 4. 运行环境
+
+- Python 3.10+
+- MySQL 8.0+
+- Windows（推荐）
+- 能访问树洞接口和 Server酱
+
+```bash
+pip install -r requirements.txt
+
+
+---
+
+## 4. 配置环境
+
+修改env.example至.env，并根据指示进行个性化配置
+树洞配置
+- TREEHOLE_AUTHORIZATION=Bearer xxx
+- TREEHOLE_COOKIE=xxx
+- TREEHOLE_X_XSRF_TOKEN=xxx
+- TREEHOLE_UUID=xxx
+会过期，需要定时更新
+
+MySQL配置
+- TREEHOLE_AUTHORIZATION=Bearer xxx
+- TREEHOLE_COOKIE=xxx
+- TREEHOLE_X_XSRF_TOKEN=xxx
+- TREEHOLE_UUID=xxx
+
+微信推送
+- SERVERCHAN_SENDKEY=SCTxxxxxxxxxxxxxxxx
+获取方式：
+1、打开 https://sct.ftqq.com
+2、登录
+3、创建 SendKey
+4、绑定微信
+
+
+---
+
+## 5. 增加订阅
+在sql文件中增加个性化关键词订阅
+{
+  "mode": "advanced",
+  "groups": [
+    ["关键词A"],
+    ["关键词B", "关键词C"]
+  ],
+  "exclude": ["排除词"]
+}
+
+
+---
+
+## 6. 长期运行
+- scripts/run_once.bat
+Win系统可在任务计划程序设置定时运行以上文件
+
