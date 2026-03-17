@@ -35,4 +35,4 @@ jobs:
         run: mkdir -p data
 
       - name: Run script
-        run: python main.py
+        run: python runner_core.py
