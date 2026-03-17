@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      TREEHOLE_AUTHORIZATION: ${{ secrets.TREEHOLE_AUTHORIZATION }}
       TREEHOLE_COOKIE: ${{ secrets.TREEHOLE_COOKIE }}
-      TREEHOLE_TOKEN: ${{ secrets.TREEHOLE_TOKEN }}
-      SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+      TREEHOLE_X_XSRF_TOKEN: ${{ secrets.TREEHOLE_X_XSRF_TOKEN }}
+      TREEHOLE_UUID: ${{ secrets.TREEHOLE_UUID }}
+      SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
       DB_PATH: data/treehole.db
 
     steps:
