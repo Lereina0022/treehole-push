@@ -79,7 +79,7 @@ jobs:
           exit 1
 
       - name: Initialize database
-        run: python scripts/init_db.py
+        run: PYTHONPATH=. python scripts/init_db.py
 
       - name: Run script
         run: python -m app.runner_core
