@@ -83,10 +83,9 @@ treehole_push/
 ```bash
 pip install -r requirements.txt
 
-
 ---
 
-## 4. 配置环境
+## 5. 配置环境
 
 修改env.example至.env，并根据指示进行个性化配置
 树洞配置
@@ -110,10 +109,9 @@ MySQL配置
 3、创建 SendKey
 4、绑定微信
 
-
 ---
 
-## 5. 增加订阅
+## 6. 增加订阅
 在sql文件中增加个性化关键词订阅
 {
   "mode": "advanced",
@@ -124,10 +122,10 @@ MySQL配置
   "exclude": ["排除词"]
 }
 
-
 ---
 
-## 6. 长期运行
+## 7. 长期运行
 - scripts/run_once.bat
 Win系统可在任务计划程序设置定时运行以上文件
 
+---
