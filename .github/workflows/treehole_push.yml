@@ -3,11 +3,15 @@ name: Treehole Push
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 */4 * * *"
 
 jobs:
   run-task:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: subscription
 
     steps:
       - name: Checkout repository
@@ -39,9 +43,7 @@ jobs:
           TREEHOLE_X_XSRF_TOKEN=${{ secrets.TREEHOLE_X_XSRF_TOKEN }}
           TREEHOLE_UUID=${{ secrets.TREEHOLE_UUID }}
           TREEHOLE_TIMEOUT=15
-
           SERVERCHAN_SENDKEY=${{ secrets.SERVERCHAN_SENDKEY }}
-
           RUNNER_INTERVAL_SECONDS=6000
           RECENT_DAYS=7
           SEARCH_PAGE=1
