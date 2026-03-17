@@ -90,24 +90,25 @@ pip install -r requirements.txt
 修改env.example至.env，并根据指示进行个性化配置
 树洞配置
 ```
-- TREEHOLE_AUTHORIZATION=Bearer xxx
-- TREEHOLE_COOKIE=xxx
-- TREEHOLE_X_XSRF_TOKEN=xxx
-- TREEHOLE_UUID=xxx
+TREEHOLE_AUTHORIZATION=Bearer xxx
+TREEHOLE_COOKIE=xxx
+TREEHOLE_X_XSRF_TOKEN=xxx
+TREEHOLE_UUID=xxx
 ```
 会过期，需要定时更新
 
 MySQL配置
 ```
-- TREEHOLE_AUTHORIZATION=Bearer xxx
-- TREEHOLE_COOKIE=xxx
-- TREEHOLE_X_XSRF_TOKEN=xxx
-- TREEHOLE_UUID=xxx
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=你的密码
+MYSQL_DB=treehole_push
 ```
 
 微信推送
 ```
-- SERVERCHAN_SENDKEY=SCTxxxxxxxxxxxxxxxx
+SERVERCHAN_SENDKEY=SCTxxxxxxxxxxxxxxxx
 ```
 获取方式：
 1、打开 https://sct.ftqq.com
@@ -134,7 +135,7 @@ MySQL配置
 
 ## 7. 长期运行
 ```
-- scripts/run_once.bat
+scripts/run_once.bat
 ```
 Win系统可在任务计划程序设置定时运行以上文件
 
