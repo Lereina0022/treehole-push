@@ -1,22 +1,72 @@
-# treehole-push
-A local treehole monitoring tool with WeChat push notifications
+# Treehole Push
 
 一个本地运行的树洞关键词监控与微信推送工具。
 
-## 功能
-- 微信小程序登录
-- 订阅规则管理
-- 定时搜索树洞内容
-- 规则匹配
-- 命中后写入待推送日志
-- 微信订阅消息推送
-- 推送记录查询
+这个项目会定时搜索指定关键词的树洞内容，根据自定义规则进行匹配；如果命中，就通过微信推送服务把提醒发到你的个人微信。
 
-## 目录
-- `app/` 业务代码
-- `scripts/` 启动脚本
-- `sql/init.sql` 数据库初始化脚本
+当前版本定位为：
 
-## 安装
-```bash
-pip install -r requirements.txt
+- **本地部署**
+- **单用户使用**
+- **Windows 环境优先**
+- **通过 Server酱推送到微信**
+- **使用 MySQL 存储订阅、帖子和推送记录**
+
+---
+
+## 1. 项目功能
+
+本项目目前支持以下功能：
+
+- 本地定时运行树洞监控脚本
+- 根据关键词搜索树洞内容
+- 按自定义规则匹配帖子正文
+- 命中后将消息推送到个人微信
+- 自动记录已推送内容，避免重复发送
+- 使用数据库保存订阅规则、帖子数据和推送日志
+
+---
+
+## 2. 适用场景
+
+这个项目适合以下场景：
+
+- 监控树洞中与课程签到、实习招聘、考试通知等相关的信息
+- 用关键词订阅自己关心的话题
+- 不想手动频繁刷树洞，希望有新内容时自动提醒
+- 想做一个本地自动化消息推送的小项目
+
+例如，你可以配置类似这样的订阅：
+
+- `考古学通论 + 签到`
+- `实习 + 产品`
+- `保研 + 夏令营`
+- `租房 + 五道口`
+
+---
+
+## 3. 项目结构
+
+```text
+treehole_push/
+├─ app/
+│  ├─ __init__.py
+│  ├─ config.py          # 读取环境变量配置
+│  ├─ database.py        # MySQL 连接
+│  ├─ parser.py          # 树洞接口结果解析
+│  ├─ matcher.py         # 订阅规则匹配
+│  ├─ treehole_client.py # 树洞请求客户端
+│  ├─ notifier.py        # 微信推送（Server酱）
+│  └─ runner_core.py     # 主执行逻辑
+│
+├─ scripts/
+│  ├─ run_once.bat       # 手动执行一次
+│  └─ start_runner.bat   # 循环执行（测试用）
+│
+├─ sql/
+│  └─ init.sql           # 数据库初始化脚本
+│
+├─ .env.example          # 配置文件模板
+├─ .gitignore            # Git 忽略文件
+├─ requirements.txt      # Python 依赖
+└─ README.md
