@@ -70,8 +70,7 @@ treehole_push/
 ├─ .gitignore            # Git 忽略文件
 ├─ requirements.txt      # Python 依赖
 └─ README.md
-
----
+```
 
 ## 4. 运行环境
 
@@ -82,6 +81,7 @@ treehole_push/
 
 ```bash
 pip install -r requirements.txt
+```
 
 ---
 
@@ -89,20 +89,26 @@ pip install -r requirements.txt
 
 修改env.example至.env，并根据指示进行个性化配置
 树洞配置
+```
 - TREEHOLE_AUTHORIZATION=Bearer xxx
 - TREEHOLE_COOKIE=xxx
 - TREEHOLE_X_XSRF_TOKEN=xxx
 - TREEHOLE_UUID=xxx
+```
 会过期，需要定时更新
 
 MySQL配置
+```
 - TREEHOLE_AUTHORIZATION=Bearer xxx
 - TREEHOLE_COOKIE=xxx
 - TREEHOLE_X_XSRF_TOKEN=xxx
 - TREEHOLE_UUID=xxx
+```
 
 微信推送
+```
 - SERVERCHAN_SENDKEY=SCTxxxxxxxxxxxxxxxx
+```
 获取方式：
 1、打开 https://sct.ftqq.com
 2、登录
@@ -113,6 +119,7 @@ MySQL配置
 
 ## 6. 增加订阅
 在sql文件中增加个性化关键词订阅
+```
 {
   "mode": "advanced",
   "groups": [
@@ -121,6 +128,7 @@ MySQL配置
   ],
   "exclude": ["排除词"]
 }
+```
 
 ---
 
