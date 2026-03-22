@@ -1,85 +1,58 @@
 name: Treehole Push
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "0 */4 * * *"
-
+  workflow_dispatch:
 
 jobs:
-  run-task:
+  run-treehole-push:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: 12345678
-          MYSQL_DATABASE: treehole_push
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -p12345678"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
+    env:
+      TREEHOLE_BASE_URL: https://treehole.pku.edu.cn
+      TREEHOLE_SEARCH_API: /chapi/api/v3/hole/list_comments
+      TREEHOLE_TIMEOUT: 15
 
-    defaults:
-      run:
-        working-directory: subscription
+      MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+      MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_DB: ${{ secrets.MYSQL_DB }}
+      MYSQL_SSL_CA: /home/runner/work/_temp/aiven-ca.pem
+
+      TREEHOLE_AUTHORIZATION: ${{ secrets.TREEHOLE_AUTHORIZATION }}
+      TREEHOLE_COOKIE: ${{ secrets.TREEHOLE_COOKIE }}
+      TREEHOLE_X_XSRF_TOKEN: ${{ secrets.TREEHOLE_X_XSRF_TOKEN }}
+      TREEHOLE_UUID: ${{ secrets.TREEHOLE_UUID }}
+
+      SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+
+      RECENT_DAYS: 7
+      SEARCH_PAGE: 1
+      SEARCH_LIMIT: 20
+      SEARCH_COMMENT_LIMIT: 10
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Write Aiven CA certificate
+        run: |
+          cat > "$MYSQL_SSL_CA" <<'EOF'
+          ${{ secrets.MYSQL_SSL_CA_PEM }}
+          EOF
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create .env
+      - name: Run treehole push
         run: |
-          cat > .env <<EOF
-          TREEHOLE_BASE_URL=https://treehole.pku.edu.cn
-          TREEHOLE_SEARCH_API=/chapi/api/v3/hole/list_comments
-          TREEHOLE_AUTHORIZATION=${{ secrets.TREEHOLE_AUTHORIZATION }}
-          TREEHOLE_COOKIE=${{ secrets.TREEHOLE_COOKIE }}
-          TREEHOLE_X_XSRF_TOKEN=${{ secrets.TREEHOLE_X_XSRF_TOKEN }}
-          TREEHOLE_UUID=${{ secrets.TREEHOLE_UUID }}
-          TREEHOLE_TIMEOUT=15
-
-          MYSQL_HOST=127.0.0.1
-          MYSQL_PORT=3306
-          MYSQL_USER=root
-          MYSQL_PASSWORD=12345678
-          MYSQL_DB=treehole_push
-
-          SERVERCHAN_SENDKEY=${{ secrets.SERVERCHAN_SENDKEY }}
-
-          RUNNER_INTERVAL_SECONDS=6000
-          RECENT_DAYS=7
-          SEARCH_PAGE=1
-          SEARCH_LIMIT=20
-          SEARCH_COMMENT_LIMIT=10
-          EOF
-
-      - name: Wait for MySQL
-        run: |
-          for i in {1..30}; do
-            nc -z 127.0.0.1 3306 && echo "MySQL is up" && exit 0
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
-          echo "MySQL did not start in time"
-          exit 1
-
-      - name: Initialize database
-        run: PYTHONPATH=. python scripts/init_db.py
-
-      - name: Run script
-        run: python -m app.runner_core
+          python -m app.runner_core
