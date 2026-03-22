@@ -55,4 +55,4 @@ jobs:
 
       - name: Run treehole push
         run: |
-          python -m app.runner_core
+          python -m subscription/app.runner_core
