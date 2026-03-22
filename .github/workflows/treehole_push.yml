@@ -54,5 +54,6 @@ jobs:
           pip install -r subscription/requirements.txt
 
       - name: Run treehole push
+        working-directory: subscription
         run: |
-          python -m subscription/app.runner_core
+          python -m app.runner_core
