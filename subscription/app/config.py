@@ -16,27 +16,26 @@ TREEHOLE_UUID = os.getenv("TREEHOLE_UUID", "").strip()
 TREEHOLE_TIMEOUT = int(os.getenv("TREEHOLE_TIMEOUT", "15"))
 
 # =========================
-# MySQL
-# =========================
-MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1").strip()
-MYSQL_PORT = int(os.getenv("MYSQL_PORT", "3306"))
-MYSQL_USER = os.getenv("MYSQL_USER", "root").strip()
-MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "").strip()
-MYSQL_DB = os.getenv("MYSQL_DB", "treehole_push").strip()
-
-# =========================
 # Server酱
 # =========================
-SERVERCHAN_SENDKEY = os.getenv("SERVERCHAN_SENDKEY", "").strip()
+SERVERCHAN_SENDKEY = os.getenv(
+    "SERVERCHAN_SENDKEY", ""
+).strip()
 
 # =========================
 # Runner
 # =========================
-RUNNER_INTERVAL_SECONDS = int(os.getenv("RUNNER_INTERVAL_SECONDS", "600"))
-RECENT_DAYS = int(os.getenv("RECENT_DAYS", "7"))
-SEARCH_PAGE = int(os.getenv("SEARCH_PAGE", "1"))
-SEARCH_LIMIT = int(os.getenv("SEARCH_LIMIT", "20"))
-SEARCH_COMMENT_LIMIT = int(os.getenv("SEARCH_COMMENT_LIMIT", "10"))
+LOOKBACK_HOURS = float(
+    os.getenv("LOOKBACK_HOURS", "5")
+)
+
+SEARCH_LIMIT = int(
+    os.getenv("SEARCH_LIMIT", "50")
+)
+
+SEARCH_COMMENT_LIMIT = int(
+    os.getenv("SEARCH_COMMENT_LIMIT", "10")
+)
 
 # =========================
 # Helpers
