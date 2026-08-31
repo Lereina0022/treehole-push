@@ -1,0 +1,56 @@
+[
+  {
+    "category_name": "实习招聘",
+    "query_text": "实习",
+    "rule": {
+      "mode": "simple",
+      "keywords": [
+        "实习",
+        "招聘",
+        "内推"
+      ],
+      "exclude": [
+        "求实习",
+        "找实习"
+      ]
+    }
+  },
+  {
+    "category_name": "金融实习",
+    "query_text": "实习",
+    "rule": {
+      "mode": "advanced",
+      "groups": [
+        [
+          "实习",
+          "招聘",
+          "内推"
+        ],
+        [
+          "证券",
+          "基金",
+          "投行",
+          "金融"
+        ]
+      ],
+      "exclude": [
+        "求实习",
+        "已截止"
+      ]
+    }
+  },
+  {
+    "category_name": "课程信息",
+    "query_text": "课程",
+    "rule": {
+      "mode": "simple",
+      "keywords": [
+        "补选",
+        "退课",
+        "课程群",
+        "调课"
+      ],
+      "exclude": []
+    }
+  }
+]
